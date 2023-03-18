@@ -1,35 +1,28 @@
 import discord
-from discord.ext import commands
 import os
-import asyncio
 from dotenv import load_dotenv, find_dotenv
-
-
-# Set up the bot with intents
-intents = discord.Intents.all()
-intents.members = True
-bot = commands.Bot(command_prefix='!', intents=intents)
 
 load_dotenv(find_dotenv())
 
-TOKEN = os.getenv("TOKEN")f
+TOKEN = os.getenv("TOKEN")
 
-# Event: on ready
+
+bot = discord.Bot()
+greetings = bot.create_group("greetings", "Greet people")
+
 @bot.event
 async def on_ready():
-    print('Logged in as {0.user}'.format(bot))
+    print('Logged in as {0.user}!'.format(bot))
 
-# LOADING EXTENSIONS
-async def load_extensions():
-    for filename in os.listdir("./cogs"):
-        if filename.endswith(".py"):
-            # cut off the .py from the file name
-            await bot.load_extension(f"cogs.{filename[:-3]}")
+#create a command
 
-#MAIN THING
-async def main():
-    async with bot:
-        await load_extensions()
-        await bot.start(TOKEN)
+@greetings.command()
+async def start(ctx, user: discord.Member):
+  thread = await ctx.channel.create_thread(name="ghost", auto_archive_duration=60, type=discord.ChannelType.private_thread)
+  await thread.add_user(ctx.author)
+  await thread.add_user(user)
+  await ctx.send(f"Thread '{thread.name}' created!")
 
-asyncio.run(main())
+  await thread.send(f"This is a private thread between {ctx.author.mention} and {user.mention}!")
+
+bot.run(TOKEN)

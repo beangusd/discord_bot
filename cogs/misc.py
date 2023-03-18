@@ -15,6 +15,7 @@ class MyCog(commands.Cog):
     async def on_ready(self):
         #await self.client.change_presence(activity=discord.Game("I HATE AUYEASE"))
         print("start command loaded")
+        
     @commands.command()
     async def sync(self, ctx) -> None:
         fmt = await ctx.bot.tree.sync(guild=ctx.guild)
