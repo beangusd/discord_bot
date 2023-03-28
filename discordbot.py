@@ -5,6 +5,11 @@ import requests
 import json 
 
 url = ""
+url2 = ""
+game_list = []
+game_string = ""
+
+
 
 #Loading TOKEN
 load_dotenv(find_dotenv())
@@ -39,26 +44,43 @@ async def on_thread_create(thread):
 
 @bot.event
 async def on_message(message):
-    if message.author == bot.user:
-        return 
-
+    # if message.author == bot.user:
+    #     return 
     if isinstance(message.channel, discord.Thread) and message.channel.id == thread_id:
         print(f'Message received in thread {thread_id}: {message.content}')
     
-        url = f'https://api.datamuse.com/words?sp={message.content}*&max=1'
-        r = requests.get(url)
-        data = json.loads(r.text)
+        if len(message.content) == 1:
+            print("Letter typed: " + message.content)
+            game_list.append(message.content)
+            game_string = ''.join(game_list)            
+            url = f'https://api.datamuse.com/words?sp={game_string}*&max=1'
+            r = requests.get(url)
+            data = json.loads(r.text)
 
-        word_list = []
+            try:
+                for word in data:
+                    name = word['word']
+                print(name)
+            except:
+                print("YOU LOST BAFOONO")
 
-        for word in data:
-            name = word['word']
-            word_list.append(name)
+        else:
+            print("bignus you suck")
+            
 
-        l = len(word_list)
 
-        for l in word_list:
-            print(l)
+        # data = json.loads(r.text)
+
+        # word_list = []
+
+        # for word in data:
+        #     name = word['word']
+        #     word_list.append(name)
+
+        # l = len(word_list)
+
+        # for l in word_list:
+        #     print(l)
 
 bot.run(TOKEN)
 
