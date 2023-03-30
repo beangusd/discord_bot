@@ -87,50 +87,6 @@ async def start(ctx, player1: discord.Member, player2: discord.Member):
             current_player = player2 if current_player == player1 else player1
 
 
-#   await player1.remove_roles(player1_role)
-#   await player2.remove_roles(player2_role)
-# @bot.event
-# async def on_thread_create(thread):
-#    print("thread was created")
-
-# @bot.event
-# async def on_message(message):
-
-#     if isinstance(message.channel, discord.Thread) and message.channel.id == thread_id:
-#         print(f'Message received in thread {thread_id}: {message.content}')
-    
-#         if len(message.content) == 1:
-#             print("Letter typed: " + message.content)
-#             game_list.append(message.content)
-#             game_string = ''.join(game_list)            
-#             url = f'https://api.datamuse.com/words?sp={game_string}*&max=1'
-#             r = requests.get(url)
-#             data = json.loads(r.text)
-
-#             try:
-#                 for word in data:
-#                     name = word['word']
-#                 print(name)
-#             except:
-#                 print("YOU LOST BAFOONO")
-#         else:
-#             print("Invalid input")
-
-            
-
-
-        # data = json.loads(r.text)
-
-        # word_list = []
-
-        # for word in data:
-        #     name = word['word']
-        #     word_list.append(name)
-
-        # l = len(word_list)
-
-        # for l in word_list:
-        #     print(l)
 
 bot.run(TOKEN)
 
